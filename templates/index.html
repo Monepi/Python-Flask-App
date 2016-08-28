@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Reading App</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container">
+    <h1>Weather Reading App</h1>
+
+    <div class="col-md-12">
+
+        {% if error_message %}
+            <p class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ error_message }}</p>
+        {% endif %}
+
+    <div class="panel panel-default col-md-6">
+        <div class="panel-heading">
+            <h3 class="panel-title">Select City and Weather Forecast Days</h3>
+        </div>
+        <div class="panel-body">
+
+
+
+            <form action="getWeather" method="post">
+
+            <div class="form-group">
+                <label>Select City</label>
+                <select name="city" class="form-control">
+                    <option value="">Select City</option>
+                    <option value="1018725">Bloemfontein</option>
+                    <option value="3369157">Cape Town</option>
+                    <option value="1007311">Durban</option>
+                    <option value="993800">Johannesburg</option>
+                    <option value="964420">Port Elizabeth</option>
+                    <option value="964137">Pretoria</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Forecast Days</label>
+                <select name="days" class="form-control">
+                    <option value="1" selected>1 Day/s</option>
+                    <option value="2">2 Day/s</option>
+                    <option value="3">3 Day/s</option>
+                    <option value="4">4 Day/s</option>
+                    <option value="5">5 Day/s</option>
+                    <option value="6">6 Day/s</option>
+                    <option value="7">7 Day/s</option>
+                </select>
+            </div>
+
+            <button class="btn btn-default" type="submit">Get Weather</button>
+
+                </form>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default" style="margin-left: 579px; height: auto;height: 251px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Panel title</h3>
+        </div>
+        <div class="panel-body" style="overflow-y: scroll; height: 213px">
+            {% if weather %}
+
+                <p><strong>City :</strong> {{weather['city']['name']}}</p>
+                <p><strong>Country :</strong> {{weather['city']['country']}}</p>
+                <p><strong>GPS Coord's :</strong> {{weather['city']['coord']['lat']}},{{weather['city']['coord']['lon']}}</p>
+                {% for item in weather['list'] %}
+                    <fieldset>
+                        <legend>Day {{loop.index}}</legend>
+                        <p><strong>Weather :</strong> {{ item['weather']['description']}}</p>
+                        <p><strong>Clouds :</strong> {{ item['clouds'] }}</p>
+                        <p><strong>Min-Temperature :</strong> {{ item['temp']['min'] }} degree celsius</p>
+                        <p><strong>Max-Temperature :</strong> {{ item['temp']['max'] }} degree celsius</p>
+                        <p><strong>Morning Temperature :</strong> {{ item['temp']['morn'] }} degree celsius</p>
+                        <p><strong>Evening Temperature :</strong> {{ item['temp']['night'] }} degree celsius</p>
+                    </fieldset>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+        </div>
+
+
+</div>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.1.0.slim.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
